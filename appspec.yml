@@ -10,3 +10,4 @@ hooks:
     - location: dev-pro-1/scripts/start_container.sh
       timeout: 300
       runas: root
+      
