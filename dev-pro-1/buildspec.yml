@@ -9,7 +9,7 @@ phases:
   install:
     runtime-version:
       python: 3.11
-  pre-build:
+  pre_build:
     commands:
       - pip install --upgrade pip
       - pip install -r dev-pro-1/requirements.txt
