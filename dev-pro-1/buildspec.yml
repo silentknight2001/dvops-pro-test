@@ -30,4 +30,4 @@ post_build:
 artifacts:
   files:
     - '**/*'
-  base-directory: ../dev-pro-1
+  base-directory: dev-pro-1
