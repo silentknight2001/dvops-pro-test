@@ -17,12 +17,9 @@ phases:
     commands:
       - cd dev-pro-1
       - echo "Building docker image"
-      - docker build -t
-        "$DOCKER_REGISTRY_URL/$DOCKER_REGISTRY_USERNAME/nayan-falsk-python-app:latest"
-      - echo "4DOCKER_REGISTRY_PASSWORD" | docker login -u
-        "$DOCKER_REGISTRY_USERNAME" --password-stdin "$DOCKER_REGISTRY_URL"
-      - docker push
-        "$DOCKER_REGISTRY_URL/$DOCKER_REGISTRY_USERNAMNE/nayan-flask-python-app:latest"
+      - docker build -t "$DOCKER_REGISTRY_URL/$DOCKER_REGISTRY_USERNAME/nayan-falsk-python-app:latest"
+      - echo "4DOCKER_REGISTRY_PASSWORD" | docker login -u "$DOCKER_REGISTRY_USERNAME" --password-stdin "$DOCKER_REGISTRY_URL"
+      - docker push "$DOCKER_REGISTRY_URL/$DOCKER_REGISTRY_USERNAMNE/nayan-flask-python-app:latest"
 post_build:
   commands:
     - echo "Build successful"
