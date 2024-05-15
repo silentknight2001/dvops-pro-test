@@ -1,28 +1,35 @@
 ---
-version: 0.1
+version: 0.2
 env:
   parameter-store:
-    DOCKER_REGISTERY_URL: /myapp/docker_url
-    DOCKER_REGISTERY_USERNAME: /myapp/docker-credential/username
-    DOCKER_REGISTERY_PASSWORD: /myapp/docker-credential/password
+    DOCKER_REGISTRY_URL: /myapp/docker_url
+    DOCKER_REGISTRY_USERNAME: /myapp/docker-credential/username
+    DOCKER_REGISTRY_PASSWORD: /myapp/docker-credential/password
+
 phases:
   install:
-    runtime-version:
+    runtime-versions:
       python: 3.11
+
   pre_build:
     commands:
+      - echo "Upgrading pip"
       - pip install --upgrade pip
+      - echo "Installing dependencies"
       - pip install -r dev-pro-1/requirements.txt
+
   build:
     commands:
       - cd dev-pro-1
       - echo "Building docker image"
-      - docker build -t "$DOCKER_REGISTRY_URL/$DOCKER_REGISTRY_USERNAME/nayan-falsk-python-app:latest"
-      - echo "4DOCKER_REGISTRY_PASSWORD" | docker login -u "$DOCKER_REGISTRY_USERNAME" --password-stdin "$DOCKER_REGISTRY_URL"
-      - docker push "$DOCKER_REGISTRY_URL/$DOCKER_REGISTRY_USERNAMNE/nayan-flask-python-app:latest"
+      - docker build -t "$DOCKER_REGISTRY_URL/$DOCKER_REGISTRY_USERNAME/nayan-flask-python-app:latest" .
+      - echo "$DOCKER_REGISTRY_PASSWORD" | docker login -u "$DOCKER_REGISTRY_USERNAME" --password-stdin "$DOCKER_REGISTRY_URL"
+      - docker push "$DOCKER_REGISTRY_URL/$DOCKER_REGISTRY_USERNAME/nayan-flask-python-app:latest"
+
 post_build:
   commands:
     - echo "Build successful"
+
 artifacts:
   files:
     - "**/*"
