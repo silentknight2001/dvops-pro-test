@@ -20,7 +20,7 @@ phases:
 
   build:
     commands:
-      - cd dev-pro-1
+      - cd dev-pro-0/dev-pro-1
       - echo "Building docker image"
       - docker build -t "$DOCKER_REGISTRY_URL/$DOCKER_REGISTRY_USERNAME/nayan-flask-python-app:latest" .
       - echo "$DOCKER_REGISTRY_PASSWORD" | docker login -u "$DOCKER_REGISTRY_USERNAME" --password-stdin "$DOCKER_REGISTRY_URL"
