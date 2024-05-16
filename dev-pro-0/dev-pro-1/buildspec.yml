@@ -16,7 +16,7 @@ phases:
       - echo "Upgrading pip"
       - pip install --upgrade pip
       - echo "Installing dependencies"
-      - pip install -r dev-pro-1/requirements.txt
+      - pip install -r dev-pro-0/dev-pro-1/requirements.txt
 
   build:
     commands:
@@ -33,4 +33,4 @@ post_build:
 artifacts:
   files:
     - "**/*"
-  base-directory: dev-pro-1
+  base-directory: dev-pro-0

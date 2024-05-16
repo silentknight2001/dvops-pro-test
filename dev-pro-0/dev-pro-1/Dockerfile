@@ -3,7 +3,7 @@ FROM python:3.8
 WORKDIR /app
 # Copy the requirements file
 
-COPY dev-pro-1/requirements.txt .
+COPY requirements.txt .
 # Install the project dependencies
 RUN pip install -r requirements.txt
 # Copy the application code into the container
