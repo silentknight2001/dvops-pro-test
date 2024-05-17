@@ -5,26 +5,30 @@ phases:
     runtime-versions:
       python: 3.11
     commands:
-      - echo "Install phase is running"
+      - echo "Installing pip"
+      - pip install --upgrade pip
   pre_build:
     commands:
-      - echo "Upgrading pip"
-      - pip install --upgrade pip
       - echo "Installing dependencies"
-      - pip install -r dev-pro-1/requirements.txt
+      - pip install -r dev-pro-0/dev-pro-1/requirements.txt
   build:
     commands:
-      - echo "Building docker image"
-      - docker build -t $DOCKER_REGISTRY_URL/$DOCKER_REGISTRY_USERNAME/nayan-flask-python-app:latest .
+      - echo "Building the Docker image"
+      - docker build -t $DOCKER_REGISTRY_URL/$DOCKER_REGISTRY_USERNAME/nayan-flask-python-app:latest dev-pro-0/dev-pro-1
+      - echo "Logging in to Docker Hub"
+      - echo $DOCKER_REGISTRY_PASSWORD | docker login --username $DOCKER_REGISTRY_USERNAME --password-stdin $DOCKER_REGISTRY_URL
   post_build:
     commands:
-      - echo "Pushing docker image"
+      - echo "Pushing the Docker image"
       - docker push $DOCKER_REGISTRY_URL/$DOCKER_REGISTRY_USERNAME/nayan-flask-python-app:latest
       - echo "Preparing deployment artifacts"
       - mkdir -p dev-pro-0
       - cp appspec.yml dev-pro-0/appspec.yml
-      - cp -r dev-pro-1 dev-pro-0/
-      - cp -r scripts dev-pro-0/
+      - cp -r dev-pro-0/dev-pro-1 dev-pro-0/
+      - cp -r dev-pro-0/dev-pro-1/scripts dev-pro-0/
+
 artifacts:
   files:
-    - dev-pro-0/**
+    - dev-pro-0/appspec.yml
+    - dev-pro-0/dev-pro-1/**
+    - dev-pro-0/dev-pro-1/scripts/**
