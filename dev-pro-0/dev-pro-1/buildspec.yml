@@ -1,5 +1,11 @@
 version: 0.2
 
+env:
+  variables:
+    DOCKER_REGISTRY_URL: "your-docker-registry-url"  # Replace with your Docker registry URL
+    DOCKER_REGISTRY_USERNAME: "your-username"        # Replace with your Docker registry username
+    DOCKER_REGISTRY_PASSWORD: "your-password"        # Replace with your Docker registry password (consider using Secrets Manager)
+
 phases:
   install:
     runtime-versions:
@@ -23,7 +29,7 @@ phases:
       - docker push $DOCKER_REGISTRY_URL/$DOCKER_REGISTRY_USERNAME/nayan-flask-python-app:latest
       - echo "Preparing deployment artifacts"
       - mkdir -p dev-pro-0
-      - cp appspec.yml dev-pro-0/appspec.yml
+      - cp dev-pro-0/dev-pro-1/appspec.yml dev-pro-0/appspec.yml
       - cp -r dev-pro-0/dev-pro-1 dev-pro-0/
       - cp -r dev-pro-0/dev-pro-1/scripts dev-pro-0/
 
