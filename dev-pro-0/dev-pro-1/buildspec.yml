@@ -26,12 +26,12 @@ phases:
       - echo "$DOCKER_REGISTRY_PASSWORD" | docker login -u "$DOCKER_REGISTRY_USERNAME" --password-stdin "$DOCKER_REGISTRY_URL"
       - docker push "$DOCKER_REGISTRY_URL/$DOCKER_REGISTRY_USERNAME/nayan-flask-python-app:latest"
 
-post_build:
-  commands:
-    - echo "Build successful"
+  post_build:
+    commands:
+      - echo "Build successful"
 
 artifacts:
   files:
     - dev-pro-0/appspec.yml
     - dev-pro-1/**
-  base-directory: .
+  base-directory: dev-pro-1
