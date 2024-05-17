@@ -1,4 +1,3 @@
----
 version: 0.2
 env:
   parameter-store:
@@ -10,6 +9,8 @@ phases:
   install:
     runtime-versions:
       python: 3.11
+    commands:
+      - echo "Install phase is running"
 
   pre_build:
     commands:
@@ -21,9 +22,9 @@ phases:
   build:
     commands:
       - cd dev-pro-0/dev-pro-1
+      - echo "$DOCKER_REGISTRY_PASSWORD" | docker login -u "$DOCKER_REGISTRY_USERNAME" --password-stdin "$DOCKER_REGISTRY_URL"
       - echo "Building docker image"
       - docker build -t "$DOCKER_REGISTRY_URL/$DOCKER_REGISTRY_USERNAME/nayan-flask-python-app:latest" .
-      - echo "$DOCKER_REGISTRY_PASSWORD" | docker login -u "$DOCKER_REGISTRY_USERNAME" --password-stdin "$DOCKER_REGISTRY_URL"
       - docker push "$DOCKER_REGISTRY_URL/$DOCKER_REGISTRY_USERNAME/nayan-flask-python-app:latest"
 
   post_build:
@@ -34,4 +35,4 @@ artifacts:
   files:
     - dev-pro-0/appspec.yml
     - dev-pro-1/**
-  base-directory: dev-pro-1
+  base-directory: dev-pro-0
