@@ -1,9 +1,4 @@
 version: 0.2
-env:
-  parameter-store:
-    DOCKER_REGISTRY_URL: /myapp/docker_url
-    DOCKER_REGISTRY_USERNAME: /myapp/docker-credential/username
-    DOCKER_REGISTRY_PASSWORD: /myapp/docker-credential/password
 
 phases:
   install:
@@ -11,28 +6,25 @@ phases:
       python: 3.11
     commands:
       - echo "Install phase is running"
-
   pre_build:
     commands:
       - echo "Upgrading pip"
       - pip install --upgrade pip
       - echo "Installing dependencies"
-      - pip install -r dev-pro-0/dev-pro-1/requirements.txt
-
+      - pip install -r requirements.txt
   build:
     commands:
-      - cd dev-pro-0/dev-pro-1
-      - echo "$DOCKER_REGISTRY_PASSWORD" | docker login -u "$DOCKER_REGISTRY_USERNAME" --password-stdin "$DOCKER_REGISTRY_URL"
       - echo "Building docker image"
-      - docker build -t "$DOCKER_REGISTRY_URL/$DOCKER_REGISTRY_USERNAME/nayan-flask-python-app:latest" .
-      - docker push "$DOCKER_REGISTRY_URL/$DOCKER_REGISTRY_USERNAME/nayan-flask-python-app:latest"
-
+      - docker build -t $DOCKER_REGISTRY_URL/$DOCKER_REGISTRY_USERNAME/nayan-flask-python-app:latest .
   post_build:
     commands:
-      - echo "Build successful"
-
+      - echo "Pushing docker image"
+      - docker push $DOCKER_REGISTRY_URL/$DOCKER_REGISTRY_USERNAME/nayan-flask-python-app:latest
+      - echo "Preparing deployment artifacts"
+      - mkdir -p dev-pro-0
+      - cp appspec.yml dev-pro-0/appspec.yml
+      - cp -r dev-pro-1 dev-pro-0/
+      - cp -r scripts dev-pro-0/
 artifacts:
   files:
-    - dev-pro-0/appspec.yml
-    - dev-pro-1/**
-  base-directory: dev-pro-0
+    - dev-pro-0/**
