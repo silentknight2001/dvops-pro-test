@@ -32,9 +32,6 @@ post_build:
 
 artifacts:
   files:
-    - appspec.yml
-    - scripts/*
-    - Dockerfile
-    - requirements.txt
-    - app.py
-  base-directory: dev-pro-0
+    - dev-pro-0/appspec.yml
+    - dev-pro-1/**
+  base-directory:
