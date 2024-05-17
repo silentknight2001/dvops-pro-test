@@ -34,4 +34,4 @@ artifacts:
   files:
     - dev-pro-0/appspec.yml
     - dev-pro-1/**
-  base-directory:
+  base-directory: .
